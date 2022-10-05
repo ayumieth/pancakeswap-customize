@@ -73,7 +73,6 @@ function CurrencyRow({
   const { account } = useWeb3React()
   const { t } = useTranslation()
   const key = currencyKey(currency)
-  console.log("key:::", key);
   const selectedTokenList = useCombinedActiveList()
   const isOnSelectedList = isTokenOnList(selectedTokenList, currency)
   const customAdded = useIsUserAddedToken(currency)
@@ -128,32 +127,22 @@ export default function CurrencyList({
   breakIndex: number | undefined
 }) {
   const native = useNativeCurrency()
-  console.log("inativeCurrencies:::", inactiveCurrencies);
-  console.log("currencies:::", currencies);
-  console.log("breakIndex:::", breakIndex);
   const itemData: (Currency | undefined)[] = useMemo(() => {
     let formatted: (Currency | undefined)[] = showBNB
       ? [native, ...currencies, ...inactiveCurrencies]
       : [...currencies, ...inactiveCurrencies]
     if (breakIndex !== undefined) {
       formatted = [...formatted.slice(0, breakIndex), undefined, ...formatted.slice(breakIndex, formatted.length)]
-      console.log("formatted:::", formatted);
     }
     return formatted
   }, [breakIndex, currencies, inactiveCurrencies, showBNB, native])
-  console.log("itemData:::", itemData);
   const { chainId } = useActiveWeb3React()
 
   const { t } = useTranslation()
 
   const Row = useCallback(
     ({ data, index, style }) => {
-      console.log("data::::", data);
-      console.log("index:::", index);
-      console.log("style:::", style);
-      console.log("breakIndex:::", breakIndex);
       const currency: Currency = data[index]
-      console.log("currency;::", currency);
       const isSelected = Boolean(selectedCurrency && currency && selectedCurrency.equals(currency))
       const otherSelected = Boolean(otherCurrency && currency && otherCurrency.equals(currency))
       const handleSelect = () => onCurrencySelect(currency)

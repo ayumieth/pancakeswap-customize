@@ -104,7 +104,6 @@ export default function CurrencySearchModal({
     setHeight(wrapperRef.current.offsetHeight - 330)
   }, [])
 
-  console.log("modalView:::", config[modalView].title, config[modalView].onBack);
   return (
     <StyledModalContainer
       drag={isMobile ? 'y' : false}

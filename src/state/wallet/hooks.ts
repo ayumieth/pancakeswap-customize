@@ -101,25 +101,18 @@ export function useCurrencyBalances(
   account?: string,
   currencies?: (Currency | undefined)[],
 ): (CurrencyAmount<Currency> | undefined)[] {
-  console.log("account::::", account)
-  console.log("crrencies:::", currencies);
 
   const tokens = useMemo(
     () => currencies?.filter((currency): currency is Token => currency?.isToken) ?? [],
     [currencies],
   )
-  console.log("tokens::::>>>>>>>>>>>", tokens);
   const tokenBalances = useTokenBalances(account, tokens)
-  console.log('tokenBalances:::', tokenBalances);
   const containsNative: boolean = useMemo(
     () => currencies?.some((currency) => currency?.isNative) ?? false,
     [currencies],
   )
-  console.log("containsNative::::", containsNative);
   const uncheckedAddresses = useMemo(() => (containsNative ? [account] : []), [containsNative, account])
-  console.log("uncheckedAddresses::::", uncheckedAddresses);
   const nativeBalance = useNativeBalances(uncheckedAddresses)
-  console.log("nativeBalance:::", nativeBalance);
 
   return useMemo(
     () =>

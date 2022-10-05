@@ -9,7 +9,6 @@ import {
   useUserSingleHopOnly,
   useZapModeManager,
 } from 'state/user/hooks'
-import { ChainId } from '@pancakeswap/sdk'
 import { SUPPORT_ZAP } from 'config/constants/supportChains'
 import { useSwapActionHandlers } from 'state/swap/useSwapActionHandlers'
 import { useActiveChainId } from 'hooks/useActiveChainId'

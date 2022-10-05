@@ -106,32 +106,25 @@ export function useDerivedSwapInfo(
   const { t } = useTranslation()
 
   const to: string | null = (recipient === null ? account : isAddress(recipient) || null) ?? null
-  console.log("to::::", to);
 
   const relevantTokenBalances = useCurrencyBalances(account ?? undefined, [
     inputCurrency ?? undefined,
     outputCurrency ?? undefined,
   ])
-  console.log("relevantTokenBalances:::", relevantTokenBalances);
   const isExactIn: boolean = independentField === Field.INPUT
-  console.log("isExactIn::::", isExactIn);
   const parsedAmount = tryParseAmount(typedValue, (isExactIn ? inputCurrency : outputCurrency) ?? undefined)
-  console.log("parsedAmount", parsedAmount);
   const bestTradeExactIn = useTradeExactIn(isExactIn ? parsedAmount : undefined, outputCurrency ?? undefined)
   const bestTradeExactOut = useTradeExactOut(inputCurrency ?? undefined, !isExactIn ? parsedAmount : undefined)
-  console.log("bestTradeExactIn", bestTradeExactIn);
   const v2Trade = isExactIn ? bestTradeExactIn : bestTradeExactOut
 
   const currencyBalances = {
     [Field.INPUT]: relevantTokenBalances[0],
     [Field.OUTPUT]: relevantTokenBalances[1],
   }
-  console.log("currencyBalances:::", currencyBalances);
   const currencies: { [field in Field]?: Currency } = {
     [Field.INPUT]: inputCurrency ?? undefined,
     [Field.OUTPUT]: outputCurrency ?? undefined,
   }
-  console.log("currencies?", currencies);
   let inputError: string | undefined
   if (!account) {
     inputError = t('Connect Wallet')

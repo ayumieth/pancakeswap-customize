@@ -28,19 +28,14 @@ export function useAllCommonPairs(currencyA?: Currency, currencyB?: Currency): P
     if (!chainId) return []
 
     const common = BASES_TO_CHECK_TRADES_AGAINST[chainId] ?? []
-    console.log("common:::", common);
     const additionalA = tokenA ? ADDITIONAL_BASES[chainId]?.[tokenA.address] ?? [] : []
     const additionalB = tokenB ? ADDITIONAL_BASES[chainId]?.[tokenB.address] ?? [] : []
-    console.log("additionalA:::", additionalA);
-    console.log("additionalB:::", additionalB);
     return [...common, ...additionalA, ...additionalB]
   }, [chainId, tokenA, tokenB])
-  console.log("bases>>>>>", bases);
   const basePairs: [Token, Token][] = useMemo(
     () => flatMap(bases, (base): [Token, Token][] => bases.map((otherBase) => [base, otherBase])),
     [bases],
   )
-  console.log("baseParirs:::", basePairs);
   const allPairCombinations: [Token, Token][] = useMemo(
     () =>
       tokenA && tokenB
@@ -103,11 +98,7 @@ export function useTradeExactIn(
   currencyOut?: Currency,
 ): Trade<Currency, Currency, TradeType> | null {
   const allowedPairs = useAllCommonPairs(currencyAmountIn?.currency, currencyOut)
-  console.log("crrencyAmountIn.currency:::", currencyAmountIn?.currency);
-  console.log("currencyOut;::", currencyOut);
-  console.log("allowedPairs:::", allowedPairs)
   const [singleHopOnly] = useUserSingleHopOnly()
-  console.log("singleHopOnly:::", singleHopOnly);
   return useMemo(() => {
     if (currencyAmountIn && currencyOut && allowedPairs.length > 0) {
       if (singleHopOnly) {

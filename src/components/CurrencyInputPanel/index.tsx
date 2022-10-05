@@ -1,29 +1,16 @@
 import { Currency, Pair } from '@pancakeswap/sdk'
 import { Button, ChevronDownIcon, Text, useModal, Flex, Box } from '@pancakeswap/uikit'
 import styled, { css } from 'styled-components'
-import { isAddress } from 'utils'
 import { useTranslation } from '@pancakeswap/localization'
-import { WrappedTokenInfo } from '@pancakeswap/tokens'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { StablePair } from 'views/AddLiquidity/AddStableLiquidity/hooks/useStableLPDerivedMintInfo'
 
-import { useBUSDCurrencyAmount } from 'hooks/useBUSDPrice'
-import { formatNumber } from 'utils/formatBalance'
 import { useCurrencyBalance } from '../../state/wallet/hooks'
 import CurrencySearchModal from '../SearchModal/CurrencySearchModal'
 import { CurrencyLogo, DoubleCurrencyLogo } from '../Logo'
 
 import { Input as NumericalInput } from './NumericalInput'
-import { CopyButton } from '../CopyButton'
-import AddToWalletButton from '../AddToWallet/AddToWalletButton'
 
-const InputRow = styled.div<{ selected: boolean }>`
-  display: flex;
-  flex-flow: row nowrap;
-  align-items: center;
-  justify-content: flex-end;
-  padding: ${({ selected }) => (selected ? '0.75rem 0.5rem 0.75rem 1rem' : '0.75rem 0.75rem 0.75rem 1rem')};
-`
 const CurrencySelectButton = styled(Button).attrs({ variant: 'text', scale: 'sm' })<{ zapStyle?: ZapStyle }>`
   padding-right: 0px;
   ${({ zapStyle, theme }) =>
@@ -115,20 +102,12 @@ export default function CurrencyInputPanel({
   commonBasesType,
   disabled,
   error,
-  showBUSD,
 }: CurrencyInputPanelProps) {
   const { account } = useActiveWeb3React()
   const selectedCurrencyBalance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
   const { t } = useTranslation()
 
-  const token = pair ? pair.liquidityToken : currency?.isToken ? currency : null
-  const tokenAddress = token ? isAddress(token.address) : null
 
-  const amountInDollar = useBUSDCurrencyAmount(
-    showBUSD ? currency : undefined,
-    Number.isFinite(+value) ? +value : undefined,
-  )
-  console.log("modalCurrency:::", currency);
   const [onPresentCurrencyModal] = useModal(
     <CurrencySearchModal
       onCurrencySelect={onCurrencySelect}
@@ -170,7 +149,7 @@ export default function CurrencyInputPanel({
           </Flex>
           <LabelLeft>
             <NumericalInput
-              align={"left"}
+              align="left"
               error={error}
               disabled={disabled}
               className="token-amount-input"

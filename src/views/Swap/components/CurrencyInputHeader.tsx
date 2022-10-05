@@ -11,7 +11,7 @@ import {
 import TransactionsModal from 'components/App/Transactions/TransactionsModal'
 import GlobalSettings from 'components/Menu/GlobalSettings'
 import { useExpertModeManager } from 'state/user/hooks'
-import { ReactElement, useCallback } from 'react'
+import { ReactElement } from 'react'
 import { SettingsMode } from '../../../components/Menu/GlobalSettings/types'
 
 interface Props {
@@ -35,12 +35,9 @@ const CurrencyInputHeader: React.FC<React.PropsWithChildren<Props>> = ({
   title,
   subtitle,
   setIsChartDisplayed,
-  onRefreshPrice,
 }) => {
   const [expertMode] = useExpertModeManager()
-  const toggleChartDisplayed = () => {
-    setIsChartDisplayed((currentIsChartDisplayed) => !currentIsChartDisplayed)
-  }
+
   const [onPresentTransactionsModal] = useModal(<TransactionsModal />)
 
   return (

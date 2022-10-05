@@ -1,14 +1,13 @@
 import { SetStateAction, useCallback, useEffect, useState, Dispatch, useMemo } from 'react'
 import styled from 'styled-components'
-import { Currency, CurrencyAmount, NativeCurrency, WNATIVE } from '@pancakeswap/sdk'
-import { Button, Text, ArrowDownIcon, Box, IconButton, ArrowUpDownIcon, Skeleton, Flex } from '@pancakeswap/uikit'
+import { Currency, CurrencyAmount } from '@pancakeswap/sdk'
+import { Button, Text, ArrowDownIcon, Box, IconButton, ArrowUpDownIcon, Skeleton } from '@pancakeswap/uikit'
 import { useIsTransactionUnsupported } from 'hooks/Trades'
 import UnsupportedCurrencyFooter from 'components/UnsupportedCurrencyFooter'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useTranslation } from '@pancakeswap/localization'
 import { maxAmountSpend } from 'utils/maxAmountSpend'
 import { useSwapActionHandlers } from 'state/swap/useSwapActionHandlers'
-import AccessRisk from 'views/Swap/components/AccessRisk'
 
 import CurrencyInputPanel from 'components/CurrencyInputPanel'
 import { CommonBasesType } from 'components/SearchModal/types'
@@ -95,15 +94,12 @@ export default function SwapForm({ setIsChartDisplayed, isChartDisplayed, isAcce
     }),
     [inputCurrency, outputCurrency],
   )
-  console.log("currencies>>>>>>>>>>>>>>>>>", currencies);
   const {
     v2Trade,
     currencyBalances,
     parsedAmount,
     inputError: swapInputError,
   } = useDerivedSwapInfo(independentField, typedValue, inputCurrency, outputCurrency, recipient)
-  console.log("v2Trade:::", v2Trade);
-  console.log("currencyBalances:::", parsedAmount);
   const {
     wrapType,
     execute: onWrap,
@@ -204,10 +200,6 @@ export default function SwapForm({ setIsChartDisplayed, isChartDisplayed, isAcce
       refreshBlockNumber()
     }
   }, [hasAmount, refreshBlockNumber])
-
-  const isShowAccessToken = useMemo(() => {
-    return isAccessTokenSupported && !currencies[Field.OUTPUT]?.isNative
-  }, [isAccessTokenSupported, currencies])
 
   return (
     <>

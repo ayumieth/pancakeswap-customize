@@ -8,10 +8,6 @@ function tryParseAmount<T extends Currency>(value?: string, currency?: T): Curre
   }
   try {
     const typedValueParsed = parseUnits(value, currency.decimals).toString()
-    console.log("typedValueParsedTokenSymbol>>>>>", currency.symbol);
-    console.log('typedValueParsed', typedValueParsed);
-    console.log("typedValueParsedDecimals", currency.decimals);
-    console.log("fromRawAmount:::", CurrencyAmount.fromRawAmount(currency, JSBI.BigInt(typedValueParsed)));
     if (typedValueParsed !== '0') {
       return CurrencyAmount.fromRawAmount(currency, JSBI.BigInt(typedValueParsed))
     }

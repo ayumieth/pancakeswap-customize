@@ -17,7 +17,6 @@ export function useSwapActionHandlers(): {
 
   const onCurrencySelection = useCallback(
     (field: Field, currency: Currency) => {
-      console.log("Currency>>>>>>>>>>>", currency);
       dispatch(
         selectCurrency({
           field,

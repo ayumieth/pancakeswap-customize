@@ -14,7 +14,6 @@ import { useAllTokens, useIsUserAddedToken, useToken } from '../../hooks/Tokens'
 import { isAddress } from '../../utils'
 import Column, { AutoColumn } from '../Layout/Column'
 import Row from '../Layout/Row'
-import CommonBases from './CommonBases'
 import CurrencyList from './CurrencyList'
 import { createFilterToken, useSortedTokensByQuery } from './filtering'
 import useTokenComparator from './sorting'
@@ -35,7 +34,6 @@ interface CurrencySearchProps {
 
 function useSearchInactiveTokenLists(search: string | undefined, minResults = 10): WrappedTokenInfo[] {
   const lists = useAllLists()
-  console.log("lists::::", lists);
   const inactiveUrls = useInactiveListUrls()
   const { chainId } = useActiveWeb3React()
   const activeTokens = useAllTokens()
@@ -86,13 +84,11 @@ function CurrencySearch({
   onCurrencySelect,
   otherSelectedCurrency,
   showCommonBases,
-  commonBasesType,
   showImportView,
   setImportToken,
   height,
 }: CurrencySearchProps) {
   const { t } = useTranslation()
-  const { chainId } = useActiveWeb3React()
 
   // refs for fixed size lists
   const fixedList = useRef<FixedSizeList>()
@@ -103,7 +99,6 @@ function CurrencySearch({
   const [invertSearchOrder] = useState<boolean>(false)
 
   const allTokens = useAllTokens()
-  console.log("allTokens:::", allTokens);
   // if they input an address, use it
   const searchToken = useToken(debouncedQuery)
   const searchTokenIsAdded = useIsUserAddedToken(searchToken)
